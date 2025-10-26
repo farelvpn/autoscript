@@ -22,8 +22,8 @@
            "clients": [
               {
                  "password": "xxxxx"
-// #trojan$
               }
+// #trojan$
           ],
          "udp": true
        },
@@ -43,8 +43,8 @@
                {
             "id": "xxxxx",
             "alterId": 0
-// #vmess$
              }
+// #vmess$
         ]
       },
       "streamSettings": {
@@ -63,9 +63,9 @@
             "clients": [
                {
                  "id": "xxxxx"                 
-// #vless$
              }
-          ]
+// #vless$
+         ]
        },
        "streamSettings":{
          "network": "ws",
