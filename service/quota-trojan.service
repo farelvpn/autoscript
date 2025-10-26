@@ -1,0 +1,13 @@
+[Unit]
+Description=Trojan Quota looping
+After=network.target
+
+[Service]
+ExecStart=/usr/local/sbin/loop-quota-trojan
+Restart=on-failure
+RestartSec=10
+User=root
+
+[Install]
+
+WantedBy=multi-user.target
