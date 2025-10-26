@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-# ========================================================
-# Script Name: add-trojan (Python Version - No Expiry)
-# Description: API script to create a non-expiring Trojan account for Xray.
-# Executed by: Python WebAPI Server
-# ========================================================
-
 import sys
 import json
 import os
@@ -165,7 +159,7 @@ def create_trojan_account(params):
 
     # 7. Restart Layanan Xray
     try:
-        subprocess.run(["systemctl", "restart", "xray.service"], check=True, capture_output=True, text=True)
+        subprocess.run(["systemctl", "restart", "xray.service", "quota-trojan.service"], check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
         print_json_response({"message": f"Gagal me-restart layanan Xray: {e.stderr}"}, success=False, code=500)
 
