@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-# ========================================================
-# Script Name: user-info (Python Version)
-# Description: API script to get detailed login and usage info for a specific Trojan user.
-# Executed by: Python WebAPI Server
-# ========================================================
-
 import sys
 import json
 import os
