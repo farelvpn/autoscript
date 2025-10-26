@@ -1,0 +1,12 @@
+[Unit]
+Description=Vless Quota looping
+After=network.target
+
+[Service]
+ExecStart=/usr/local/sbin/loop-quota-vless
+Restart=on-failure
+RestartSec=10
+User=root
+
+[Install]
+WantedBy=multi-user.target
