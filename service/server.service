@@ -1,0 +1,38 @@
+[Unit]
+Description=WebAPI Server Proxy All OS By Rerechan02
+Documentation=https://github.com/FN-Rerechan02
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+User=root
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/server
+WorkingDirectory=/usr/local/sbin/api
+Restart=on-failure
+RestartPreventExitStatus=23
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+# Resource limits
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+# Security settings - Modified untuk allow write access
+ProtectSystem=full
+ProtectHome=yes
+ReadWritePaths=/var/log /usr/local/sbin/api /etc/api /etc/xray /tmp /var/tmp
+ReadOnlyPaths=/usr /boot /opt
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
