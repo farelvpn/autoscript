@@ -1,10 +1,4 @@
 #!/usr/bin/env python3
-# ========================================================
-# Script Name: delete-trojan (Python Version - No Recovery)
-# Description: API script to permanently delete a Trojan account.
-# Executed by: Python WebAPI Server
-# ========================================================
-
 import sys
 import json
 import os
@@ -157,7 +151,7 @@ def delete_trojan_account(params):
     
     # 6. Restart Layanan Xray
     try:
-        subprocess.run(["systemctl", "restart", "xray.service"], check=True, capture_output=True, text=True)
+        subprocess.run(["systemctl", "restart", "xray.service", "quota-trojan.service"], check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
         print_json_response({"message": f"Gagal me-restart layanan Xray: {e.stderr}"}, success=False, code=500)
         
