@@ -26,38 +26,24 @@ systemctl daemon-reload
 systemctl restart ssh
 systemctl restart sshd
 
-# Make A Directory
-mkdir -p /etc/xray/limit/ip/ssh
-mkdir -p /etc/xray/limit/ip/vless
-mkdir -p /etc/xray/limit/quota/ssh
-mkdir -p /etc/xray/limit/database/ssh
-mkdir -p /etc/xray/limit/database/vless
-mkdir -p /etc/xray/usage/quta/vless
-mkdir -p /etc/xray/recovery/ssh
-mkdir -p /etc/xray/recovery/vless
-mkdir -p /etc/xray/usage/quota/vless
-mkdir -p /etc/xray/limit/database/trojan
-mkdir -p /etc/xray/usage/quta/trojan
-mkdir -p /etc/xray/recovery/trojan
-mkdir -p /etc/xray/recovery/trojan
+# Create Api Repo
+mkdir -p /usr/local/sbin/api
+
+# Direktori untuk Trojan
+mkdir -p /etc/xray/database/trojan
+mkdir -p /etc/xray/limit/quota/trojan
 mkdir -p /etc/xray/usage/quota/trojan
-mkdir -p /etc/xray/limit/database/vmess
-mkdir -p /etc/xray/usage/quta/vmess
-mkdir -p /etc/xray/recovery/vmess
-mkdir -p /etc/xray/recovery/vmess
+
+# Direktori untuk VMess
+mkdir -p /etc/xray/database/vmess
+mkdir -p /etc/xray/limit/quota/vmess
 mkdir -p /etc/xray/usage/quota/vmess
 
-# Copy Menu
-cd /usr/local/sbin
-apt update
-apt install zip unzip -y
-wget -qO menu.zip "https://raw.githubusercontent.com/88PanelSc/sc/main/main.zip"
-unzip menu.zip
-rm -f menu.zip
-chmod +x *
-cd api
-chmod +x *
-cd
+# Direktori untuk VLESS
+mkdir -p /etc/xray/database/vless
+mkdir -p /etc/xray/limit/quota/vless
+mkdir -p /etc/xray/usage/quota/vless
+
 
 # Ini firewall
 apt update
@@ -92,121 +78,6 @@ echo -e "\e[32m[OK]\e[0m Domain set -> $domain"
 clear
 echo -e "$domain" > /etc/xray/domain
 
-# Install Squid Proxy
-apt install sudo -y
-wget -q https://raw.githubusercontent.com/serverok/squid-proxy-installer/master/squid3-install.sh -O squid3-install.sh
-sudo bash squid3-install.sh
-rm -f squid3-install.sh
-
-if [ -f /etc/squid/squid.conf ]; then
-  cd /etc/squid
-  find . -type f -name "squid.conf" -exec sed -i 's|http_access allow password|http_access allow all|g' {} +
-  sudo sed -i 's/^http_port.*$/http_port 8080/g'  /etc/squid/squid.conf
-  systemctl daemon-reload
-  systemctl restart squid
-elif [ -f /etc/squid3/squid.conf ]; then
-  cd /etc/squid3
-  find . -type f -name "squid.conf" -exec sed -i 's|http_access allow password|http_access allow all|g' {} +
-  sudo sed -i 's/^http_port.*$/http_port 8080/g'  /etc/squid3/squid.conf
-  systemctl daemon-reload
-  systemctl restart squid3
-else
-  echo "Konfigurasi squid tidak ditemukan di /etc/squid maupun /etc/squid3"
-fi
-
-# Setup OVPN
-curl -s https://raw.githubusercontent.com/FN-Rerechan02/ovpn/main/openvpn.sh | bash
-
-# Setup OHP
-cd /usr/local/bin
-wget -O ohp.zip "https://raw.githubusercontent.com/FN-Rerechan02/ovpn/main/ohpserver-linux32.zip"
-unzip ohp.zip
-chmod +x ohpserver
-rm -f ohp.zip
-
-# Setup Service OHP
-cd /etc/systemd/system
-cat > /etc/systemd/system/ohp-dropbear.service << END
-[Unit]
-Description=SSH OHP Redirection Service
-Documentation=https://t.me/Rerechan02
-After=network.target nss-lookup.target
-
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/ohpserver -port 3128 -proxy 127.0.0.1:3128 -tunnel 127.0.0.1:109
-Restart=on-failure
-LimitNOFILE=infinity
-
-[Install]
-WantedBy=multi-user.target
-END
-
-cat > /etc/systemd/system/ohp-openvpn.service << END
-[Unit]
-Description=SSH OHP Redirection Service
-Documentation=https://t.me/Rerechan02
-After=network.target nss-lookup.target
-
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/ohpserver -port 8000 -proxy 127.0.0.1:3128 -tunnel 127.0.0.1:1194
-Restart=on-failure
-LimitNOFILE=infinity
-
-[Install]
-WantedBy=multi-user.target
-END
-
-# Service OHP
-systemctl daemon-reload
-systemctl enable ohp-dropbear ohp-openvpn
-systemctl start ohp-dropbear ohp-openvpn
-systemctl restart ohp-dropbear ohp-openvpn
-
-
-# Install Dropbear
-apt install dropbear -y
-bash <(curl -s https://raw.githubusercontent.com/FN-Rerechan02/tools/refs/heads/main/dropbear.sh)
-rm -f /etc/dropbear/dropbear_rsa_host_key
-dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key
-rm -f /etc/dropbear/dropbear_dss_host_key
-dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
-rm -f /etc/dropbear/dropbear_ecdsa_host_key
-dropbearkey -t ecdsa -f /etc/dropbear/dropbear_ecdsa_host_key
-cd /etc/default
-rm -f dropbear
-wget -qO dropbear "https://raw.githubusercontent.com/88PanelSc/sc/main/files/dropbear"
-echo "/bin/false" >> /etc/shells
-echo "/usr/sbin/nologin" >> /etc/shells
-echo -e "Dev @Rerechan02 Sponsored by @HarisTakiri" > /etc/issue.net
-clear
-systemctl daemon-reload
-/etc/init.d/dropbear restart
-clear
-cd /root
-rm -fr dropbear*
-
-# Install SSH WebSocket
-apt install python3 -y
-cd /usr/local/bin
-wget -qO proxy "https://raw.githubusercontent.com/88PanelSc/sc/main/biner/proxy"
-chmod +x proxy
-cd /etc/systemd/system
-wget -qO ssh-ws.service "https://raw.githubusercontent.com/88PanelSc/sc/main/service/ssh-ws.service"
-cd
-systemctl daemon-reload
-systemctl start ssh-ws.service
-systemctl enable ssh-ws.service
-
 # Install BadVPN / UDPGW for Support Call & Video Call
 cd /usr/local/bin
 OS=`uname -m`;
@@ -227,7 +98,7 @@ mkdir -p /usr/local/share/xray
 wget -q -O /usr/local/share/xray/geosite.dat "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat" >/dev/null 2>&1
 wget -q -O /usr/local/share/xray/geoip.dat "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat" >/dev/null 2>&1
 chmod +x /usr/local/share/xray/*
-wget -q -O /etc/xray/config.json "https://raw.githubusercontent.com/88PanelSc/sc/main/files/config.json"
+wget -q -O /etc/xray/config.json "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/files/config.json"
 cd /etc/xray
 uuid=$(cat /proc/sys/kernel/random/uuid)
 sed -i "s|xxxxx|${uuid}|g" /etc/xray/config.json
@@ -244,7 +115,7 @@ cd /etc/systemd/system
 systemctl stop xray.service
 systemctl disable xray.service
 rm -fr xray*
-wget -qO xray.service "https://raw.githubusercontent.com/88PanelSc/sc/main/service/xray.service"
+wget -qO xray.service "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/service/xray.service"
 systemctl enable xray
 systemctl start xray
 systemctl restart xray
@@ -269,8 +140,8 @@ chmod 644 /etc/xray/xray.crt
 # Setup Nginx
 bash <(curl -s https://raw.githubusercontent.com/FN-Rerechan02/tools/refs/heads/main/nginx.sh)
 systemctl stop nginx
-wget -qO /etc/nginx/nginx.conf "https://raw.githubusercontent.com/Rerechan-Team/websocket-proxy/fn_project/nginx.conf"
-wget -qO /etc/nginx/fn.conf "https://raw.githubusercontent.com/88PanelSc/sc/main/files/rerechan.conf"
+wget -qO /etc/nginx/nginx.conf "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/files/nginx.conf"
+wget -qO /etc/nginx/conf.d/default.conf "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/files/default.conf"
 sed -i "s|xxx|${domain}|g" /etc/nginx/fn.conf
 systemctl daemon-reload
 systemctl start nginx
@@ -279,16 +150,7 @@ systemctl start nginx
 apt install cron -y
 
 # Setup Auto Backup
-echo "* * * * * root xp-ssh" >> /etc/crontab
-echo "* * * * * root xp-vless" >> /etc/crontab
-echo "* * * * * root xp-vmess" >> /etc/crontab
-echo "* * * * * root xp-trojan" >> /etc/crontab
 echo "0 * * * * root backup" >> /etc/crontab
-echo "0 0 * * * root fixlog" >> /etc/crontab
-echo "0 * * * * root cek-ssh" >> /etc/crontab
-echo "0 * * * * root cek-vmess" >> /etc/crontab
-echo "0 * * * * root cek-vless" >> /etc/crontab
-echo "0 * * * * root cek-trojan" >> /etc/crontab
 
 # restart service
 systemctl daemon-relaod
@@ -298,35 +160,67 @@ systemctl restart cron
 curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
 sudo apt-get install speedtest
 
-# Setup Limit IP & Quota
+# Setup Trojan
+cd /usr/local/sbin/api/
+wget -O add-trojan "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/trojan/add-trojan.py"
+wget -O add-quota-trojan "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/trojan/add-quota-trojan.py"
+wget -O cek-trojan "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/trojan/cek-trojan.py"
+wget -O delete-trojan "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/trojan/delete-trojan.py"
+chmod +x *trojan
+cd /usr/local/sbin
+wget -O loop-quota-trojan "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/trojan/loop-quota-trojan.py"
+wget -O quota-trojan "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/trojan/quota-trojan.py"
+chmod +x quota-trojan loop-quota-trojan
 cd /etc/systemd/system
-wget -q https://raw.githubusercontent.com/88PanelSc/sc/refs/heads/main/service/quota.service
-wget -q https://raw.githubusercontent.com/88PanelSc/sc/refs/heads/main/service/limit-ip-vless.service
-wget -q https://raw.githubusercontent.com/88PanelSc/sc/refs/heads/main/service/quota-trojan.service
-wget -q https://raw.githubusercontent.com/88PanelSc/sc/refs/heads/main/service/limit-ip-trojan.service
-wget -q https://raw.githubusercontent.com/88PanelSc/sc/refs/heads/main/service/quota-vmess.service
-wget -q https://raw.githubusercontent.com/88PanelSc/sc/refs/heads/main/service/limit-ip-vmess.service
-
+wget -q -O quota-trojan.service "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/service/quota-trojan.service"
 systemctl daemon-reload
-systemctl start quota limit-ip-vless
-systemctl enable quota limit-ip-vless
-systemctl start quota-trojan limit-ip-trojan
-systemctl enable quota-trojan limit-ip-trojan
-systemctl start quota-vmess limit-ip-vmess
-systemctl enable quota-vmess limit-ip-vmess
-cd
+systemctl enable quota-trojan
+systemctl start quota-trojan
+
+# Setup Vmess
+cd /usr/local/sbin/api
+wget -O add-vmess "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vmess/add-vmess.py"
+wget -O add-quota-vmess "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vmess/add-quota-vmess.py"
+wget -O cek-vmess "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vmess/cek-vmess.py"
+wget -O delete-vmess "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vmess/delete-vmess.py"
+chmod +x *vmess
+cd /usr/local/sbin
+wget -O loop-quota-vmess "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vmess/loop-quota-vmess.py"
+wget -O quota-vmess "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vmess/quota-vmess.py"
+chmod +x quota-vmess loop-quota-vmess
+cd /etc/systemd/system
+wget -q -O quota-vmess.service "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/service/quota-vmess.service"
+systemctl daemon-reload
+systemctl enable quota-vmess
+systemctl start quota-vmess
+
+# Setup Vless
+cd /usr/local/sbin/api/
+wget -O add-vless "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vless/add-vless.py"
+wget -O add-quota-vless "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vless/add-quota-vless.py"
+wget -O cek-vless "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vless/cek-vless.py"
+wget -O delete-vless "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vless/delete-vless.py"
+chmod +x *vless
+cd /usr/local/sbin
+wget -O loop-quota-vless "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vless/loop-quota-vless.py"
+wget -O quota-vless "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/vless/quota-vless.py"
+chmod +x quota-vless loop-quota-vless
+cd /etc/systemd/system
+wget -q -O quota-vless.service "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/service/quota-vless.service"
+systemctl daemon-reload
+systemctl enable quota-vless
+systemctl start quota-vless
 
 # Api Server
 cd /usr/local/bin
-wget -qO server "https://raw.githubusercontent.com/88PanelSc/sc/main/files/server"
+wget -qO server "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/files/server.py"
 chmod +x server
 cd /etc/systemd/system
-wget -q https://raw.githubusercontent.com/88PanelSc/sc/main/service/server.service
+wget -q -O server.service "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/service/server.service"
 chmod +x server.service
-systemctl darmon-reload
+systemctl daemon-reload
 
-clear
-echo -e "clear ; menu" > /root/.profile
+
 
 # Create Swap
 echo -e "Creating Swap Ram"
