@@ -175,13 +175,13 @@ def main():
 
         menu_text = f"""
 {Colors.BOLD}{Colors.BLUE}╔════════════════════════════════════════════╗{Colors.NC}
-{Colors.BOLD}{Colors.BLUE}║             {Colors.CYAN}<= Menu Web API =>              {Colors.BLUE}║{Colors.NC}
+{Colors.BOLD}{Colors.BLUE}║             {Colors.CYAN}<= Menu Web API =>             {Colors.BLUE}║{Colors.NC}
 {Colors.BOLD}{Colors.BLUE}╠════════════════════════════════════════════╣{Colors.NC}
 {Colors.BOLD}{Colors.BLUE}║{Colors.NC}  {Colors.YELLOW}Status: {status}
 {Colors.BOLD}{Colors.BLUE}║{Colors.NC}  {Colors.CYAN}Domain: {Colors.BOLD}{domain}{Colors.NC}
 {Colors.BOLD}{Colors.BLUE}╠════════════════════════════════════════════╣{Colors.NC}
 {Colors.BOLD}{Colors.BLUE}║{Colors.NC}  {Colors.YELLOW}Contoh Endpoint:{Colors.NC}
-{Colors.BOLD}{Colors.BLUE}║{Colors.NC}    - https://{domain}/add-trojan
+{Colors.BOLD}{Colors.BLUE}║{Colors.NC}    - https://{domain}/api/add-trojan
 {Colors.BOLD}{Colors.BLUE}║{Colors.NC}    - http://{domain}:9000/add-trojan
 {Colors.BOLD}{Colors.BLUE}╠════════════════════════════════════════════╣{Colors.NC}
 {Colors.BOLD}{Colors.BLUE}║{Colors.NC}  {Colors.BOLD}1.{Colors.NC} Generate Token Baru      {Colors.CYAN}- Otomatis buat token baru{Colors.NC}
