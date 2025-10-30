@@ -17,7 +17,7 @@ Proyek ini bersifat open-source. Kami menyambut baik kontribusi, fork, dan pull 
 # Instalasi
 Untuk melakukan instalasi penuh dari AutoScript Xray Panel, cukup jalankan perintah berikut sebagai pengguna root di server Anda:
 ```
-bash install.sh
+apt update ; apt install wget curl binutils openssl -y ; bash <(curl -Lks https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/install.sh)
 ```
 
 
