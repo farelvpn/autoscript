@@ -142,7 +142,7 @@ bash <(curl -s https://raw.githubusercontent.com/FN-Rerechan02/tools/refs/heads/
 systemctl stop nginx
 wget -qO /etc/nginx/nginx.conf "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/files/nginx.conf"
 wget -qO /etc/nginx/conf.d/default.conf "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/files/default.conf"
-sed -i "s|xxx|${domain}|g" /etc/nginx/fn.conf
+sed -i "s|xxx|${domain}|g" /etc/nginx/conf.d/default.conf
 systemctl daemon-reload
 systemctl start nginx
 
