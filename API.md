@@ -119,7 +119,7 @@ Respons Kesalahan Umum
 ```
 
 2. Hapus Akun Trojan
-- Endpoint: POST /api/delete-trojan
+- Endpoint: POST `/api/delete-trojan`
 - Deskripsi: Menghapus akun Trojan secara permanen.
 
 ## Request Body (JSON):
@@ -145,7 +145,7 @@ Respons Kesalahan Umum
 ```
 
 3. Cek Akun Trojan
-- Endpoint: POST /api/cek-trojan
+- Endpoint: POST `/api/cek-trojan`
 - Deskripsi: Memeriksa detail, status kuota, dan info login akun Trojan.
 ## Request Body (JSON):
 ```JSON
@@ -179,7 +179,7 @@ Respons Kesalahan Umum
 ```
 
 4. Tambah Kuota Trojan
-- Endpoint: POST /api/add-quota-trojan
+- Endpoint: POST `/api/add-quota-trojan`
 - Deskripsi: Menambahkan kuota ke total kuota akun Trojan yang sudah ada.
 ## Request Body (JSON):
 ```JSON
@@ -217,7 +217,7 @@ Respons Kesalahan Umum
 
 # Endpoint Vmess
 1. Buat Akun Vmess
-- Endpoint: POST /api/add-vmess
+- Endpoint: POST `/api/add-vmess`
 - Deskripsi: Membuat akun Vmess baru.
 ## Request Body (JSON):
 ```JSON
@@ -256,7 +256,7 @@ Respons Kesalahan Umum
 ```
 
 2. Hapus Akun Vmess
-- Endpoint: POST /api/delete-vmess
+- Endpoint: POST `/api/delete-vmess`
 - Deskripsi: Menghapus akun Vmess secara permanen.
 
 ## Request Body (JSON):
@@ -281,7 +281,7 @@ Respons Kesalahan Umum
 ```
 
 3. Cek Akun Vmess
-- Endpoint: POST /api/cek-vmess
+- Endpoint: POST `/api/cek-vmess`
 - Deskripsi: Memeriksa detail, status kuota, dan info login akun Vmess.
 
 ## Request Body (JSON):
@@ -316,7 +316,7 @@ Respons Kesalahan Umum
 ```
 
 4. Tambah Kuota Vmess
-- Endpoint: POST /api/add-quota-vmess
+- Endpoint: POST `/api/add-quota-vmess`
 - Deskripsi: Menambahkan kuota ke total kuota akun Vmess yang sudah ada.
 
 ## Request Body (JSON):
@@ -356,7 +356,7 @@ Respons Kesalahan Umum
 # Endpoint Vless
 
 1. Buat Akun Vless
-- Endpoint: POST /api/add-vless
+- Endpoint: POST `/api/add-vless`
 - Deskripsi: Membuat akun Vless baru.
 
 ## Request Body (JSON):
@@ -396,7 +396,7 @@ Respons Kesalahan Umum
 ```
 
 2. Hapus Akun Vless
-- Endpoint: POST /api/delete-vless
+- Endpoint: POST `/api/delete-vless`
 - Deskripsi: Menghapus akun Vless secara permanen.
 
 ## Request Body (JSON):
@@ -421,7 +421,7 @@ Respons Kesalahan Umum
 ```
 
 3. Cek Akun Vless
-- Endpoint: POST /api/cek-vless
+- Endpoint: POST `/api/cek-vless`
 - Deskripsi: Memeriksa detail, status kuota, dan info login akun Vless.
 
 ## Request Body (JSON):
@@ -456,7 +456,7 @@ Respons Kesalahan Umum
 ```
 
 4. Tambah Kuota Vless
-- Endpoint: POST /api/add-quota-vless
+- Endpoint: POST `/api/add-quota-vless`
 - Deskripsi: Menambahkan kuota ke total kuota akun Vless yang sudah ada.
 
 ## Request Body (JSON):
