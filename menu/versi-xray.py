@@ -24,7 +24,7 @@ class Color:
 def print_header():
     """Mencetak header skrip yang bergaya."""
     clear_screen()
-    line = f"{Color.BLUE_BG}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{Color.NC}"
+    line = f"{Color.BLUE_BG}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{Color.NC}"
     print(line)
     print(f"{Color.HEADER_BG}           XRAY CORE VERSION CHANGER           {Color.NC}")
     print(line)
@@ -85,7 +85,7 @@ def main():
     current_version = version_output.split('\n')[0].split(' ')[1] if version_output else "Tidak diketahui"
     print(f"{Color.BIWhite}Versi Saat Ini       :{Color.NC} {Color.GREEN}{current_version}{Color.NC}")
     
-    line = f"{Color.BLUE_BG}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{Color.NC}"
+    line = f"{Color.BLUE_BG}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{Color.NC}"
     print(line)
 
     # 4. Tampilkan Menu Pilihan Versi
