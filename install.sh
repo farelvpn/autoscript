@@ -234,7 +234,8 @@ cd
 cd /usr/local/sbin
 wget -O menu-domain "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/menu/menu-domain.py"
 wget -O telegram-info "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/menu/telegram-info.py"
-chmod +x menu-domain telegram-info
+wget -O versi-xray "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/menu/versi-xray.py"
+chmod +x menu-domain telegram-info versi-xray
 
 # Create Swap
 echo -e "Creating Swap Ram"
