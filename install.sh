@@ -149,6 +149,12 @@ systemctl start nginx
 # Setup Crontab
 apt install cron -y
 
+# Setup Code Backup & Restore
+cd /usr/local/sbin
+wget -O backup "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/backup/backup.py"
+wget -O restore "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/backup/restore.py"
+chmod +x backup restore
+
 # Setup Auto Backup
 echo "0 * * * * root backup" >> /etc/crontab
 
@@ -219,8 +225,16 @@ cd /etc/systemd/system
 wget -q -O server.service "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/service/server.service"
 chmod +x server.service
 systemctl daemon-reload
+cd /usr/local/sbin
+wget -O menu-api "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/menu/menu-api.py"
+chmod +x menu-api
+cd
 
-
+# Menu Tambahan
+cd /usr/local/sbin
+wget -O menu-domain "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/menu/menu-domain.py"
+wget -O telegram-info "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/menu/telegram-info.py"
+chmod +x menu-domain telegram-info
 
 # Create Swap
 echo -e "Creating Swap Ram"
