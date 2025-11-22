@@ -111,7 +111,8 @@ func APIHandler(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, scriptPath)
-	cmd.Env = append(os.Environ(), "REQUEST_METHOD="+r.Method)
+//	cmd.Env = append(os.Environ(), "REQUEST_METHOD="+r.Method)
+	cmd.Env = append(os.Environ(), "REQUEST_METHOD="+r.Method, "TERM=dumb")
 
 	if r.Method == http.MethodPost || r.Method == http.MethodPut {
 		if body, err := io.ReadAll(r.Body); err == nil {
