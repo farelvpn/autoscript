@@ -219,7 +219,7 @@ systemctl start quota-vless
 
 # Api Server
 cd /usr/local/bin
-wget -qO server "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/files/server.py"
+wget -qO server "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/files/server-api"
 chmod +x server
 cd /etc/systemd/system
 wget -q -O server.service "https://raw.githubusercontent.com/farelvpn/autoscript/refs/heads/main/service/server.service"
