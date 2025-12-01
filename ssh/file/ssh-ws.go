@@ -23,6 +23,18 @@
  - Dimas Anwar S. A. [ Testing ]
 */
 
+/*
+
+CMD Compile:
+CGO_ENABLED=0 go build -ldflags "-s -w -X 'main.Credits=Farell Aditya' -X 'main.Version=v1.0-Stable'" -o ssh-ws
+
+Minimal:
+- Debian 11
+- Ubuntu 22.04
+- go version go1.22.0 linux/amd64
+
+*/
+
 package main
 
 import (
