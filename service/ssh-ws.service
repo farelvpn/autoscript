@@ -1,0 +1,16 @@
+[Unit]
+Description=SSH Proxy Forward TCP To WebSocket
+Documentation=https://farellvpn.rerechanstore.eu.org/autoscript
+After=syslog.target network-online.target
+
+[Service]
+User=root
+NoNewPrivileges=true
+ExecStart=/usr/local/bin/ssh-ws
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=10000
+LimitNOFILE=1000000
+
+[Install]
+WantedBy=multi-user.target
