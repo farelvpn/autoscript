@@ -1,3 +1,3 @@
-module main.go
+module ssh-ws.go
 
 go 1.25.4
