@@ -39,6 +39,11 @@ import (
 	"time"
 )
 
+var (
+	Version = "1.0.1"
+	Credits = "Farell Aditya"
+)
+
 const (
 	ColorReset  = "\033[0m"
 	ColorRed    = "\033[31m"
@@ -284,7 +289,7 @@ func formatBytes(b int64) string {
 
 func printCustomHelp() {
 	printBanner()
-	fmt.Printf("Usage: %s./main [flags]%s\n\n", ColorCyan, ColorReset)
+	fmt.Printf("Usage: %s./ssh-ws [flags]%s\n\n", ColorCyan, ColorReset)
 	printFlag("-p, --port", "Port server", fmt.Sprintf("%d", DefaultPort))
 	printFlag("-b, --bind", "Bind IP Address", DefaultBind)
 	printFlag("-t, --target", "Fallback Target", DefaultTarget)
@@ -302,10 +307,12 @@ func printBanner() {
    ___  ___  ____  _  ____  __
   / _ \/ _ \/ __ \| |/ /\ \/ /
  / ___/ , _/ /_/ /   |   \  /  
-/_/  /_/|_|\____/_/|_|   /_/   
- :: GO-TUNNEL PRO :: v1.1
- Telegram: @farellvpn
-	`)
+/_/  /_/|_|\____/_/|_|   /_/   `)
+
+	fmt.Printf(" :: GO-TUNNEL PRO :: %s\n", Version)
+	fmt.Printf(" :: Developers    :: %s\n", Credits)
+	fmt.Println(" :: Telegram      :: @farellvpn")
+	fmt.Println()
 	fmt.Print(ColorReset)
 }
 
